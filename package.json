@@ -1,0 +1,28 @@
+{
+  "name": "connect4-js",
+  "version": "0.0.1",
+  "description": "Connect4 JS",
+  "repository": "https://github.com/dbravender/connect4-js",
+  "main": "src/connectfour.js",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "long": "^3.2.0",
+    "mcts": "^0.0.8"
+  },
+  "scripts": {
+    "test": "mocha --compilers ts:typescript-require test/**.ts"
+  },
+  "author": "Dan Bravender",
+  "engine": "node >= 4.0.0",
+  "devDependencies": {
+    "@types/lodash": "^4.14.66",
+    "@types/long": "^3.0.31",
+    "@types/mocha": "^2.2.41",
+    "@types/node": "^7.0.31",
+    "chai": "^4.0.2",
+    "mocha": "^3.4.2",
+    "ts-node": "^3.0.6",
+    "typescript": "^2.3.4",
+    "typescript-require": "^0.2.9-1"
+  }
+}
