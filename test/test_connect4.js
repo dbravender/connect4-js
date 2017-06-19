@@ -1,6 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var _ = require('lodash');
+var Long = require('long');
 var connectfour_1 = require("../connectfour");
 var mcts_1 = require("mcts");
 var chai_1 = require("chai");
@@ -94,12 +95,26 @@ describe('ConnectFourGame', function () {
         var game = new connectfour_1.ConnectFourGame();
         game.board = board;
         game.bitboards = connectfour_1.getBitboards(board);
+        game.performMove(5);
+        chai_1.assert.deepEqual(game.board, [[x, x, x, x, x, x, x],
+            [x, x, x, x, x, x, x],
+            [x, x, x, x, x, x, x],
+            [x, x, x, x, x, x, x],
+            [x, x, 1, 1, 1, x, x],
+            [x, x, 0, 0, 0, 0, x]]);
+        chai_1.assert.equal(game.getWinner(), 0);
+        board = [[x, x, x, x, x, x, x],
+            [x, x, x, x, x, x, x],
+            [x, x, x, x, x, x, x],
+            [x, x, x, x, x, x, x],
+            [x, x, 1, 1, 1, x, x],
+            [x, x, 0, 0, 0, x, x]];
+        game = new connectfour_1.ConnectFourGame();
+        game.board = board;
+        game.bitboards = connectfour_1.getBitboards(board);
         game._currentPlayer = 0;
         var mcts = new mcts_1.MCTS(game, 500);
         var move = mcts.selectMove();
-        console.log(move);
-        console.log(mcts.rootNode.getChildren());
-        console.log('currentPlayer', mcts.rootNode.game.getCurrentPlayer());
         chai_1.assert.isTrue(move == 1 || move == 5);
     });
 });

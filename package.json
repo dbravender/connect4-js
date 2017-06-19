@@ -10,7 +10,7 @@
     "mcts": "^0.0.8"
   },
   "scripts": {
-    "test": "mocha --compilers ts:typescript-require test/**.ts"
+    "test": "tsc connectfour/index.ts && tsc test/test_connect4.ts && mocha test/test_connect4.js"
   },
   "author": "Dan Bravender",
   "engine": "node >= 4.0.0",

@@ -34,7 +34,7 @@ function checkWin(bitboard) {
     var diag2 = bitboard.and(bitboard.shiftRight(H2));
     var vert = bitboard.and(bitboard.shiftRight(1));
     var hasWon = ((diag1.and(diag1.shiftRight(2 * HEIGHT))).or((hori.and(hori.shiftRight(2 * H1)))).or((diag2.and(diag2.shiftRight(2 * H2)))).or((vert.and(vert.shiftRight(2)))));
-    return hasWon.toInt();
+    return hasWon.greaterThan(0);
 }
 function checkTopRow(board) {
     return _.pull(board[0].map(function (row, column) { if (row == null)
@@ -45,9 +45,9 @@ function checkTopRow(board) {
 function getBitboards(board) {
     var bitboards = [new Long(0), new Long(0)];
     _.each(_.range(2), function (player) {
-        _.each(_.range(5, -1, -1), function (row) {
+        _.each(_.range(6), function (row) {
             _.each(_.range(7), function (column) {
-                if (board[row][column] == player) {
+                if (board[row][column] === player) {
                     bitboards[player] = bitboards[player].xor(new Long(1).shiftLeft(bitboardLookup[row][column]));
                 }
             });
@@ -87,6 +87,9 @@ var ConnectFourGame = (function () {
         this._currentPlayer = (this._currentPlayer + 1) % 2;
     };
     ConnectFourGame.prototype.getPossibleMoves = function () {
+        if (this.getWinner() !== null) {
+            return [];
+        }
         return checkTopRow(this.board);
     };
     ConnectFourGame.prototype.getWinner = function () {

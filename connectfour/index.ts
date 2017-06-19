@@ -24,7 +24,7 @@ export function emptyBoard(): Board {
   // did this in a cleaner way but TypeScript didn't like it
   // return new Array(6).fill().map(() => new Array(7).fill(null));
   let board = [null, null, null, null, null, null];
-  return board.map(() => [null, null, null, null, null, null, null]);
+  return board.map(() => { return [null, null, null, null, null, null, null] });
 }
 
 
@@ -41,7 +41,7 @@ function checkWin(bitboard: Long) {
                 (hori.and(hori.shiftRight(2 * H1)))).or(
                 (diag2.and(diag2.shiftRight(2 * H2)))).or(
                 (vert.and(vert.shiftRight(2)))));
-  return hasWon.toInt();
+  return hasWon.greaterThan(0);
 }
 
 function checkTopRow(board) {
@@ -50,11 +50,11 @@ function checkTopRow(board) {
 
 
 export function getBitboards(board) {
-  let bitboards = [new Long(0), new Long(0)];
+  var bitboards = [new Long(0), new Long(0)];
   _.each(_.range(2), (player) => {
-    _.each(_.range(5, -1, -1), (row) => {
+    _.each(_.range(6), (row) => {
       _.each(_.range(7), (column) => {
-        if (board[row][column] == player) {
+        if (board[row][column] === player) {
           bitboards[player] = bitboards[player].xor(new Long(1).shiftLeft(bitboardLookup[row][column]));
         }
       });
@@ -106,6 +106,9 @@ export class ConnectFourGame {
   }
 
   getPossibleMoves() {
+    if (this.getWinner() !== null) {
+      return [];
+    }
     return checkTopRow(this.board);
   }
 

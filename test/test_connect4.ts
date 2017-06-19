@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const Long = require('long');
 import {getBitboards, findRowForColumn, emptyBoard, ConnectFourGame} from '../connectfour';
 import {MCTS} from 'mcts';
 import {expect, assert} from 'chai';
@@ -101,21 +102,38 @@ describe('ConnectFourGame', function() {
   it('it can play a winning move with MCTS', function () {
     const x = null;
     let board = [[x, x, x, x, x, x, x],
-             [x, x, x, x, x, x, x],
-             [x, x, x, x, x, x, x],
-             [x, x, x, x, x, x, x],
-             [x, x, 1, 1, 1, x, x],
-             [x, x, 0, 0, 0, x, x]]
+                 [x, x, x, x, x, x, x],
+                 [x, x, x, x, x, x, x],
+                 [x, x, x, x, x, x, x],
+                 [x, x, 1, 1, 1, x, x],
+                 [x, x, 0, 0, 0, x, x]]
     let game = new ConnectFourGame();
+    game.board = board;
+    game.bitboards = getBitboards(board);
+
+    game.performMove(5);
+    assert.deepEqual(game.board,
+                     [[x, x, x, x, x, x, x],
+                      [x, x, x, x, x, x, x],
+                      [x, x, x, x, x, x, x],
+                      [x, x, x, x, x, x, x],
+                      [x, x, 1, 1, 1, x, x],
+                      [x, x, 0, 0, 0, 0, x]]);
+    assert.equal(game.getWinner(), 0)
+
+    board = [[x, x, x, x, x, x, x],
+                 [x, x, x, x, x, x, x],
+                 [x, x, x, x, x, x, x],
+                 [x, x, x, x, x, x, x],
+                 [x, x, 1, 1, 1, x, x],
+                 [x, x, 0, 0, 0, x, x]]
+    game = new ConnectFourGame();
     game.board = board;
     game.bitboards = getBitboards(board);
     game._currentPlayer = 0;
 
     let mcts = new MCTS(game, 500);
     let move = mcts.selectMove();
-    console.log(move);
-    console.log(mcts.rootNode.getChildren());
-    console.log('currentPlayer', mcts.rootNode.game.getCurrentPlayer());
     assert.isTrue(move == 1 || move == 5);
    });
 });
