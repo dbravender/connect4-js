@@ -44,15 +44,15 @@ function checkTopRow(board) {
 }
 function getBitboards(board) {
     var bitboards = [new Long(0), new Long(0)];
-    _.each(_.range(2), function (player) {
-        _.each(_.range(6), function (row) {
-            _.each(_.range(7), function (column) {
+    for (var player = 0; player < 2; player++) {
+        for (var row = 0; row < 6; row++) {
+            for (var column = 0; column < 7; column++) {
                 if (board[row][column] === player) {
                     bitboards[player] = bitboards[player].xor(new Long(1).shiftLeft(bitboardLookup[row][column]));
                 }
-            });
-        });
-    });
+            }
+        }
+    }
     return bitboards;
 }
 exports.getBitboards = getBitboards;
@@ -78,8 +78,9 @@ var ConnectFourGame = (function () {
         this.bitboards[this.currentPlayer] = this.bitboards[this.currentPlayer].xor(new Long(1).shiftLeft(bitboardLookup[row][column]));
         var winner = null;
         _.each(this.bitboards, function (bitboard, player) {
-            if (checkWin(bitboard))
+            if (checkWin(bitboard)) {
                 winner = player;
+            }
         });
         if (!checkTopRow(this.board).length && winner === null)
             winner = -1;

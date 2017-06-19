@@ -51,15 +51,15 @@ function checkTopRow(board) {
 
 export function getBitboards(board) {
   let bitboards = [new Long(0), new Long(0)];
-  _.each(_.range(2), (player) => {
-    _.each(_.range(6), (row) => {
-      _.each(_.range(7), (column) => {
+  for (let player = 0; player < 2; player++) {
+    for (let row = 0; row < 6; row++) {
+      for (let column = 0; column < 7; column++) {
         if (board[row][column] === player) {
           bitboards[player] = bitboards[player].xor(new Long(1).shiftLeft(bitboardLookup[row][column]));
         }
-      });
-    });
-  });
+      }
+    }
+  }
 
   return bitboards;
 }
@@ -94,8 +94,9 @@ export class ConnectFourGame {
     let winner = null;
 
     _.each(this.bitboards, (bitboard, player) => {
-      if (checkWin(bitboard))
+      if (checkWin(bitboard)) {
         winner = player;
+      }
     });
 
     if (!checkTopRow(this.board).length && winner === null)
