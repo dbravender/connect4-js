@@ -75,21 +75,21 @@ export class ConnectFourGame {
   board: Board;
   bitboards: Long[];
   winner: Player;
-  _currentPlayer: Player;
+  currentPlayer: Player;
 
   constructor() {
     this.board = emptyBoard();
     this.bitboards = [new Long(0), new Long(0)];
     this.winner = null;
-    this._currentPlayer = 0;
+    this.currentPlayer = 0;
   }
 
   performMove(column: number) {
     let row = findRowForColumn(this.board, column);
-    this.board[row][column] = this._currentPlayer;
+    this.board[row][column] = this.currentPlayer;
     this.bitboards[0] = new Long(this.bitboards[0].low, this.bitboards[0].high);
     this.bitboards[1] = new Long(this.bitboards[1].low, this.bitboards[1].high);
-    this.bitboards[this._currentPlayer] = this.bitboards[this._currentPlayer].xor(new Long(1).shiftLeft(bitboardLookup[row][column]));
+    this.bitboards[this.currentPlayer] = this.bitboards[this.currentPlayer].xor(new Long(1).shiftLeft(bitboardLookup[row][column]));
 
     let winner = null;
 
@@ -102,7 +102,7 @@ export class ConnectFourGame {
       winner = -1
 
     this.winner = winner;
-    this._currentPlayer = (this._currentPlayer + 1) % 2;
+    this.currentPlayer = (this.currentPlayer + 1) % 2;
   }
 
   getPossibleMoves() {
@@ -117,6 +117,6 @@ export class ConnectFourGame {
   }
 
   getCurrentPlayer() {
-    return this._currentPlayer;
+    return this.currentPlayer;
   }
 }

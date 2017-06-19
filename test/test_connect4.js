@@ -55,7 +55,7 @@ describe('ConnectFourGame', function () {
         // reset state
         game.board = _.cloneDeep(board);
         game.bitboards = connectfour_1.getBitboards(board);
-        game._currentPlayer = 0;
+        game.currentPlayer = 0;
         game.performMove(3);
         chai_1.assert.deepEqual(game.board, [[x, x, x, x, x, x, x],
             [x, x, x, x, x, x, x],
@@ -72,7 +72,7 @@ describe('ConnectFourGame', function () {
             [x, x, x, 1, 0, 0, 0]];
         game.board = _.cloneDeep(board);
         game.bitboards = connectfour_1.getBitboards(board);
-        game._currentPlayer = 1;
+        game.currentPlayer = 1;
         game.performMove(6);
         chai_1.assert.deepEqual(game.board, [[x, x, x, x, x, x, x],
             [x, x, x, x, x, x, x],
@@ -112,7 +112,7 @@ describe('ConnectFourGame', function () {
         game = new connectfour_1.ConnectFourGame();
         game.board = board;
         game.bitboards = connectfour_1.getBitboards(board);
-        game._currentPlayer = 0;
+        game.currentPlayer = 0;
         var mcts = new mcts_1.MCTS(game, 500);
         var move = mcts.selectMove();
         chai_1.assert.isTrue(move == 1 || move == 5);

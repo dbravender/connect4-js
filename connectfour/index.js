@@ -68,14 +68,14 @@ var ConnectFourGame = (function () {
         this.board = emptyBoard();
         this.bitboards = [new Long(0), new Long(0)];
         this.winner = null;
-        this._currentPlayer = 0;
+        this.currentPlayer = 0;
     }
     ConnectFourGame.prototype.performMove = function (column) {
         var row = findRowForColumn(this.board, column);
-        this.board[row][column] = this._currentPlayer;
+        this.board[row][column] = this.currentPlayer;
         this.bitboards[0] = new Long(this.bitboards[0].low, this.bitboards[0].high);
         this.bitboards[1] = new Long(this.bitboards[1].low, this.bitboards[1].high);
-        this.bitboards[this._currentPlayer] = this.bitboards[this._currentPlayer].xor(new Long(1).shiftLeft(bitboardLookup[row][column]));
+        this.bitboards[this.currentPlayer] = this.bitboards[this.currentPlayer].xor(new Long(1).shiftLeft(bitboardLookup[row][column]));
         var winner = null;
         _.each(this.bitboards, function (bitboard, player) {
             if (checkWin(bitboard))
@@ -84,7 +84,7 @@ var ConnectFourGame = (function () {
         if (!checkTopRow(this.board).length && winner === null)
             winner = -1;
         this.winner = winner;
-        this._currentPlayer = (this._currentPlayer + 1) % 2;
+        this.currentPlayer = (this.currentPlayer + 1) % 2;
     };
     ConnectFourGame.prototype.getPossibleMoves = function () {
         if (this.getWinner() !== null) {
@@ -96,7 +96,7 @@ var ConnectFourGame = (function () {
         return this.winner;
     };
     ConnectFourGame.prototype.getCurrentPlayer = function () {
-        return this._currentPlayer;
+        return this.currentPlayer;
     };
     return ConnectFourGame;
 }());

@@ -62,7 +62,7 @@ describe('ConnectFourGame', function() {
     // reset state
     game.board = _.cloneDeep(board);
     game.bitboards = getBitboards(board);
-    game._currentPlayer = 0;
+    game.currentPlayer = 0;
 
     game.performMove(3);
     assert.deepEqual(game.board,
@@ -84,7 +84,7 @@ describe('ConnectFourGame', function() {
 
     game.board = _.cloneDeep(board);
     game.bitboards = getBitboards(board);
-    game._currentPlayer = 1;
+    game.currentPlayer = 1;
 
     game.performMove(6);
     assert.deepEqual(game.board,
@@ -130,7 +130,7 @@ describe('ConnectFourGame', function() {
     game = new ConnectFourGame();
     game.board = board;
     game.bitboards = getBitboards(board);
-    game._currentPlayer = 0;
+    game.currentPlayer = 0;
 
     let mcts = new MCTS(game, 500);
     let move = mcts.selectMove();
