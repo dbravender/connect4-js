@@ -1,5 +1,5 @@
 const _ = require('lodash');
-var Long = require("long");
+const Long = require("long");
 
 type Board = Player[][];
 
@@ -50,7 +50,7 @@ function checkTopRow(board) {
 
 
 export function getBitboards(board) {
-  var bitboards = [new Long(0), new Long(0)];
+  let bitboards = [new Long(0), new Long(0)];
   _.each(_.range(2), (player) => {
     _.each(_.range(6), (row) => {
       _.each(_.range(7), (column) => {
@@ -65,7 +65,7 @@ export function getBitboards(board) {
 }
 
 export function findRowForColumn(board: Board, column: number): number {
-  for (var row = 5; row > -1; row--) {
+  for (let row = 5; row > -1; row--) {
     if (board[row][column] === null)
       return row;
   }
